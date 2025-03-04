@@ -1,0 +1,99 @@
+{% extends 'base_site.html' %}
+
+{% block title %}Add New Teacher | Unisync{% endblock title %}
+
+{% block breadcrumb %}
+    <div class="flex [.header_&amp;]:below-lg:hidden items-center gap-1.25 text-xs lg:text-sm font-medium mb-2.5 lg:mb-0" data-reparent="true" data-reparent-mode="prepend|lg:prepend" data-reparent-target="#content_container|lg:#header_container">
+        <a href="{% url 'home' %}" class="text-gray-600 hover:text-primary">Dashboard</span>
+        <i class="ki-filled ki-right text-gray-500 text-3xs"></i>
+        <span class="text-gray-700">Add New Teacher</span>
+    </div>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="container-fixed">
+        <form method="post" novalidate="novalidate">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 lg:gap-7.5">
+                <div class="col-span-1">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Employee Details</h3>
+                        </div>
+                        <div class="card-body">
+                            <div >
+                                <label for="{{ form.department.id_for_label }}" class="form-label mb-2">{{ form.department.label }}<span class="text-danger">*</span></label>
+                                {{ form.department }}
+                                {{ form.department.errors }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">General Info</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid grid-cols-2 gap-5">
+                                <div class="col-span-1">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label mb-2">{{ form.first_name.label }}<span class="text-danger">*</span></label>
+                                    {{ form.first_name }}
+                                    {{ form.first_name.errors }}
+                                </div>
+                                <div class="col-span-1">
+                                    <label for="{{ form.last_name.id_for_label }}" class="form-label mb-2">{{ form.last_name.label }}<span class="text-danger">*</span></label>
+                                    {{ form.last_name }}
+                                    {{ form.last_name.errors }}
+                                </div>
+                                <div class="col-span-1">
+                                    <label for="{{ form.gender.id_for_label }}" class="form-label mb-2">{{ form.gender.label }}<span class="text-danger">*</span></label>
+                                    {{ form.gender }}
+                                    {{ form.gender.errors }}
+                                </div>
+                                <div class="col-span-1">
+                                    <label for="{{ form.blood_group.id_for_label }}" class="form-label mb-2">{{ form.blood_group.label }}<span class="text-danger">*</span></label>
+                                    {{ form.blood_group }}
+                                    {{ form.blood_group.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-5">
+                        <div class="card-header">
+                            <h3 class="card-title">Contact Info</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid grid-cols-2 gap-5">
+                                <div class="col-span-1">
+                                    <label for="{{ form.email.id_for_label }}" class="form-label mb-2">{{ form.email.label }}<span class="text-danger">*</span></label>
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+                                <div class="col-span-1">
+                                    <label for="{{ form.phone.id_for_label }}" class="form-label mb-2">{{ form.phone.label }}<span class="text-danger">*</span></label>
+                                    {{ form.phone }}
+                                    {{ form.phone.errors }}
+                                </div>
+                                <div class="col-span-2">
+                                    <label for="{{ form.present_address.id_for_label }}" class="form-label mb-2">{{ form.present_address.label }}<span class="text-danger">*</span></label>
+                                    {{ form.present_address }}
+                                    {{ form.present_address.errors }}
+                                </div>
+                                <div class="col-span-2">
+                                    <label for="{{ form.permanent_address.id_for_label }}" class="form-label mb-2">{{ form.permanent_address.label }}<span class="text-danger">*</span></label>
+                                    {{ form.permanent_address }}
+                                    {{ form.permanent_address.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right mt-7">
+                <button type="submit" class="btn btn-primary">SAVE</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+    
