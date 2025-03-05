@@ -29,4 +29,8 @@ class TeacherAddForm(forms.Form):
     present_address = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Present Address'}))
     permanent_address = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Permanent Address'}))
     department = forms.ModelChoiceField(queryset=Department.objects.all(), widget=forms.Select(attrs={'class': 'select', 'placeholder': 'Department'}))
+    designation = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Designation'}))
+    qualification = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Qualification'}))
+    experience = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Experience'}))
+
 
