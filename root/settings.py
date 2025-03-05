@@ -44,6 +44,9 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'account.User'
 
+LOGIN_URL = 'sign_in'
+LOGIN_REDIRECT_URL = 'dashboard'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -129,3 +132,14 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'secondary',   # Bootstrap's "secondary" for debug
+    messages.INFO: 'info',         # Default info
+    messages.SUCCESS: 'success',   # Default success
+    messages.WARNING: 'warning',   # Default warning
+    messages.ERROR: 'danger',      # Change "error" to "danger" for Bootstrap
+}
