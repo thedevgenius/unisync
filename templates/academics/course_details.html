@@ -1,0 +1,30 @@
+{% extends 'base_site.html' %}
+
+{% block title %}{{ course.name }} | Unisync{% endblock title %}
+
+{% block breadcrumb %}
+    <div class="flex [.header_&amp;]:below-lg:hidden items-center gap-1.25 text-xs lg:text-sm font-medium mb-2.5 lg:mb-0" data-reparent="true" data-reparent-mode="prepend|lg:prepend" data-reparent-target="#content_container|lg:#header_container">
+        <a href="{% url 'dashboard' %}" class="text-gray-600 hover:text-primary">Dashboard</span>
+        <i class="ki-filled ki-right text-gray-500 text-3xs"></i>
+        <span class="text-gray-700">All Courses</span>
+        <i class="ki-filled ki-right text-gray-500 text-3xs"></i>
+        <span class="text-gray-700">{{ course.name }}</span>
+    </div>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="container-fixed">
+        
+        {% for key, value in fees.items %}
+            {{ key }}
+            
+            {% for key in value %}
+                <p>{{ key.particular }} - {{ key.amount }}</p>
+
+            {% endfor %}
+                
+        {% endfor %}
+                
+    </div>
+{% endblock content %}
+    

@@ -27,3 +27,11 @@ class Course(models.Model):
     
     def __str__(self):
         return self.name
+    
+
+class AcademicYear(models.Model):
+    title = models.CharField(max_length=15, unique=True)
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title

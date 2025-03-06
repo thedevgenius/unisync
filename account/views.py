@@ -9,9 +9,9 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.contrib.auth.models import Group
 
-from .models import User, Teacher
-from .forms import TeacherAddForm, SignInForm
-from academics.models import Department
+from .models import User, Teacher, Student
+from .forms import TeacherAddForm, SignInForm, StudentAddForm
+from academics.models import Department, Course
 # Create your views here.
 
 class SignInView(LoginView):
@@ -80,7 +80,6 @@ class TeacherAddView(TemplateView):
         
         return render(request, self.template_name, {'form': form})
 
-
 class TeacherListView(TemplateView):
     template_name = 'account/teacher_list.html'
 
@@ -139,3 +138,29 @@ class TeacherListView(TemplateView):
 
 
         return render(request, self.template_name)
+    
+class StudentAddView(TemplateView):
+    template_name = 'account/student_add.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = StudentAddForm()
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        form = StudentAddForm(request.POST)
+        if form.is_valid():
+            now = datetime.now()
+            data = form.cleaned_data
+            first_name = data['first_name']
+            last_name = data['last_name']
+            course = data['course']
+            full_name = f"{first_name}{last_name}".lower()
+            password = f"{full_name[:4]}{now:%d%m}"
+            last_student = Student.objects.filter(course=course).select_related('user').order_by('-id').first()
+            last_student_id = int(last_student.user.username.split('/')[-1]) if last_student else 0
+            username = f'GCU/{course.code}/{now.year}/{(last_student_id + 1):03d}'
+            print(username)
+        else:
+            print(form.errors)
+        return render(request, self.template_name, {'form': form})

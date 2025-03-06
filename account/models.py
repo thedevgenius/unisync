@@ -53,4 +53,20 @@ class Teacher(models.Model):
     def __str__(self):
         return self.user.username
     
+
+
+class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
+    course = models.ForeignKey('academics.Course', on_delete=models.CASCADE)
+    sem = models.CharField(max_length=2, default='1')
+    admission_date = models.DateField(null=True, blank=True)
+    class_roll = models.CharField(max_length=5, verbose_name='Class Roll Number')
+    uni_roll = models.CharField(max_length=10, unique=True, verbose_name='University Roll Number')
+    reg_number = models.CharField(max_length=10, unique=True, verbose_name='Registration Number')
+
+    guardian_name = models.CharField(max_length=100, verbose_name="Guardian's Name")
+    guardian_contact = models.CharField(max_length=15, verbose_name="Guardian's Contact")
+    
+    def __str__(self):
+        return self.user.username
     
