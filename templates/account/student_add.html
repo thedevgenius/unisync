@@ -11,12 +11,13 @@
 {% endblock breadcrumb %}
 
 {% block content %}
+    
     <div class="container-fixed">
         <form method="post" novalidate="novalidate">
             {% csrf_token %}
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">General Info</h3>
+                    <h3 class="card-title">New Admission</h3>
                 </div>
                 <div class="card-body">
                     <div class="grid grid-cols-2 gap-5">
@@ -30,6 +31,16 @@
                             {{ form.last_name }}
                             {{ form.last_name.errors }}
                         </div>
+                        <div class="col-span-1">
+                            <label for="{{ form.email.id_for_label }}" class="form-label mb-2">{{ form.email.label }}<span class="text-danger">*</span></label>
+                            {{ form.email }}
+                            {{ form.email.errors }}
+                        </div>
+                        <div class="col-span-1">
+                            <label for="{{ form.phone.id_for_label }}" class="form-label mb-2">{{ form.phone.label }}<span class="text-danger">*</span></label>
+                            {{ form.phone }}
+                            {{ form.phone.errors }}
+                        </div>
                         <div class="col-span-2">
                             <label for="{{ form.course.id_for_label }}" class="form-label mb-2">{{ form.course.label }}<span class="text-danger">*</span></label>
                             {{ form.course }}
@@ -39,7 +50,7 @@
                 </div>
             </div>
             <div class="text-right mt-7">
-                <button type="submit" class="btn btn-primary">SAVE</button>
+                <button type="submit" class="btn btn-primary">ADD STUDENT</button>
             </div>
         </form>
     </div>

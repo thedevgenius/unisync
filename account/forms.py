@@ -42,8 +42,17 @@ class TeacherAddForm(UserAddForm):
 class StudentAddForm(forms.Form):
     first_name = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'First Name'}))
     last_name = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Last Name'}))
+    email = forms.EmailField(max_length=150, widget=forms.EmailInput(attrs={'class': 'input', 'placeholder': 'Email'}))
+    phone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Phone'}))
     course = forms.ModelChoiceField(queryset=Course.objects.all(), widget=forms.Select(attrs={'class': 'select'}))
 
+class GurdianForm(forms.Form):
+    guardian_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Guardian Name'}))
+    guardian_contact = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Guardian Contact'}))
+
+class DocumentUploadForm(forms.Form):
+    age_proof = forms.FileField(widget=forms.FileInput(attrs={'class': 'input', 'placeholder': 'Age Proof'}))
+    address_proof = forms.FileField(widget=forms.FileInput(attrs={'class': 'input', 'placeholder': 'Address Proof'}))
 
 
 class SignInForm(AuthenticationForm):

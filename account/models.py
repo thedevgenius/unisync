@@ -1,7 +1,10 @@
+from hashids import Hashids
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
+hashids = Hashids(salt='change_user_id', min_length=10)
 # Create your models here.
 class User(AbstractUser):
     username_validator = RegexValidator(
@@ -40,6 +43,9 @@ class User(AbstractUser):
     
     def get_first_letter(self):
         return f'{self.first_name[:1]}'
+    
+    def get_hash_id(self):
+        return hashids.encode(self.id)
 
 
 class Teacher(models.Model):
@@ -54,19 +60,20 @@ class Teacher(models.Model):
         return self.user.username
     
 
-
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     course = models.ForeignKey('academics.Course', on_delete=models.CASCADE)
     sem = models.CharField(max_length=2, default='1')
     admission_date = models.DateField(null=True, blank=True)
     class_roll = models.CharField(max_length=5, verbose_name='Class Roll Number')
-    uni_roll = models.CharField(max_length=10, unique=True, verbose_name='University Roll Number')
-    reg_number = models.CharField(max_length=10, unique=True, verbose_name='Registration Number')
+    uni_roll = models.CharField(max_length=10, unique=True, null=True, verbose_name='University Roll Number')
+    reg_number = models.CharField(max_length=10, unique=True, null=True, verbose_name='Registration Number')
 
-    guardian_name = models.CharField(max_length=100, verbose_name="Guardian's Name")
-    guardian_contact = models.CharField(max_length=15, verbose_name="Guardian's Contact")
+    guardian_name = models.CharField(max_length=100, null=True, verbose_name="Guardian's Name")
+    guardian_contact = models.CharField(max_length=15, null=True, verbose_name="Guardian's Contact")
+
+    age_proof = models.FileField(upload_to='student/documet/', null=True, blank=True)
+    address_proof = models.FileField(upload_to='student/documet/', null=True, blank=True)
     
     def __str__(self):
         return self.user.username
-    

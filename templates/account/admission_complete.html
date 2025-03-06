@@ -1,0 +1,154 @@
+{% extends 'base_site.html' %}
+
+{% block title %}New Admission | Unisync{% endblock title %}
+
+{% block breadcrumb %}
+    <div class="flex [.header_&amp;]:below-lg:hidden items-center gap-1.25 text-xs lg:text-sm font-medium mb-2.5 lg:mb-0" data-reparent="true" data-reparent-mode="prepend|lg:prepend" data-reparent-target="#content_container|lg:#header_container">
+        <a href="{% url 'dashboard' %}" class="text-gray-600 hover:text-primary">Dashboard</a>
+        <i class="ki-filled ki-right text-gray-500 text-3xs"></i>
+        <span class="text-gray-700">{{ student.user.username }}</span>
+    </div>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="container-fixed">
+        <div class="grid grid-cols-3 gap-5">
+            <div class="col-span-1">
+                <div class="card">
+                    <!-- <div class="card-header gap-2">
+                        <h3 class="card-title">Members</h3>
+                    </div> -->
+                    <div class="card-body">
+                        <div class="flex flex-col gap-2 lg:gap-5">
+                            <div class="flex items-center gap-2">
+                                <div class="flex items-center grow gap-2.5">
+                                    <!-- <img alt="" class="rounded-full size-9 shrink-0" src="assets/media/avatars/300-3.png"> -->
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-medium text-gray-900 mb-px">Profile Creation</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-xs btn-icon btn-success btn-outline rounded-full active"> <i class="ki-filled ki-check"></i></button>
+                            </div>
+                            <div class="flex items-center gap-2" data-tab="personal_info">
+                                <div class="flex items-center grow gap-2.5">
+                                    <!-- <img alt="" class="rounded-full size-9 shrink-0" src="assets/media/avatars/300-3.png"> -->
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-medium text-gray-900 hover:text-primary-active mb-px">Complete Profile</span>
+                                    </div>
+                                </div>
+                                {% if student.guardian_name and student.guardian_contact %}
+                                    <button class="btn btn-xs btn-icon btn-success btn-outline rounded-full active"> <i class="ki-filled ki-check"></i></button>
+                                {% else %}
+                                    <button class="btn btn-xs btn-icon btn-danger btn-outline rounded-full"> <i class="ki-filled ki-plus"></i></button>
+                                {% endif %}
+                                
+                            </div>
+                            <div class="flex items-center gap-2" data-tab="document_upload">
+                                <div class="flex items-center grow gap-2.5">
+                                    <!-- <img alt="" class="rounded-full size-9 shrink-0" src="assets/media/avatars/300-3.png"> -->
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-medium text-gray-900 hover:text-primary-active mb-px">Document Upload</span>
+                                    </div>
+                                </div>
+                                {% if student.age_proof and student.address_proof %}
+                                    <button class="btn btn-xs btn-icon btn-success btn-outline rounded-full active"> <i class="ki-filled ki-check"></i></button>
+                                {% else %}
+                                    <button class="btn btn-xs btn-icon btn-danger btn-outline rounded-full"> <i class="ki-filled ki-plus"></i></button>
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-2">
+                <div id="personal_info" {% if student.guardian_name and student.guardian_contact %}style="display:none;"{% endif %}>
+                    <form method="post">
+                        <div class="card">
+                            <div class="card-header gap-2">
+                                <h3 class="card-title">Personal Information</h3>
+                            </div>
+                            <div class="card-body">
+                                {% csrf_token %}
+                                <div class="grid grid-cols-2 gap-5">
+                                    <div class="col-span-1">
+                                        <label for="{{ form.guardian_name.id_for_label }}" class="form-label mb-2">{{ form.guardian_name.label }}<span class="text-danger">*</span></label>
+                                        {{ form.guardian_name }}
+                                        {{ form.guardian_name.errors }}
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label for="{{ form.guardian_contact.id_for_label }}" class="form-label mb-2">{{ form.guardian_contact.label }}<span class="text-danger">*</span></label>
+                                        {{ form.guardian_contact }}
+                                        {{ form.guardian_contact.errors }}
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="flex justify-end mt-5">
+                            <button type="submit" name="submit_form" class="btn btn-primary">SAVE & NEXT</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="document_upload">
+                    <form method="post" novalidate="novalidate" enctype="multipart/form-data">
+                        <div class="card">
+                            <div class="card-header gap-2">
+                                <h3 class="card-title">Document Upload</h3>
+                            </div>
+                            <div class="card-body">
+                                {% csrf_token %}
+                                <div class="grid grid-cols-2 gap-5">
+                                    <div class="col-span-1">
+                                        <label for="{{ form2.age_proof.id_for_label }}" class="form-label mb-2">{{ form2.age_proof.label }}<span class="text-danger">*</span></label>
+                                        {{ form2.age_proof }}
+                                        {{ form2.age_proof.errors }}
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label for="{{ form2.address_proof.id_for_label }}" class="form-label mb-2">{{ form2.address_proof.label }}<span class="text-danger">*</span></label>
+                                        {{ form2.address_proof }}
+                                        {{ form2.address_proof.errors }}
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="flex justify-end mt-5">
+                            <button type="submit" name="submit_form2" class="btn btn-primary">SAVE & NEXT</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- <form method="post" novalidate="novalidate">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">General Info</h3>
+                </div>
+                <div class="card-body">
+                    <div class="grid grid-cols-2 gap-5">
+                        <div class="col-span-1">
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label mb-2">{{ form.first_name.label }}<span class="text-danger">*</span></label>
+                            {{ form.first_name }}
+                            {{ form.first_name.errors }}
+                        </div>
+                        <div class="col-span-1">
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label mb-2">{{ form.last_name.label }}<span class="text-danger">*</span></label>
+                            {{ form.last_name }}
+                            {{ form.last_name.errors }}
+                        </div>
+                        <div class="col-span-2">
+                            <label for="{{ form.course.id_for_label }}" class="form-label mb-2">{{ form.course.label }}<span class="text-danger">*</span></label>
+                            {{ form.course }}
+                            {{ form.course.errors }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right mt-7">
+                <button type="submit" class="btn btn-primary">SAVE</button>
+            </div>
+        </form> -->
+    </div>
+{% endblock content %}
+    
