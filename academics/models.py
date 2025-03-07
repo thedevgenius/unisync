@@ -1,6 +1,10 @@
 from django.db import models
+from hashids import Hashids
 
 # Create your models here.
+
+hashids = Hashids(salt='academics', min_length=10)
+
 class Department(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=10)
@@ -28,10 +32,13 @@ class Course(models.Model):
     def __str__(self):
         return self.name
     
+    def get_hash_id(self):
+        return hashids.encode(self.id)
+    
 
 class AcademicYear(models.Model):
-    title = models.CharField(max_length=15, unique=True)
-    status = models.BooleanField(default=False)
+    start = models.DateField()
+    end = models.DateField()
 
     def __str__(self):
-        return self.title
+        return f'{self.start.year} - {self.end.year}'

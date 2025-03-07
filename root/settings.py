@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'core',
     'account',
     'academics',
-    'payment',
+    'pay',
 ]
 
 AUTH_USER_MODEL = 'account.User'
@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'root.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gcudb',  # Your database name
+        'NAME': 'granddb',  # Your database name
         'USER': 'postgres',       # Your PostgreSQL username
         'PASSWORD': 'root', # Your PostgreSQL password
         'HOST': 'localhost',    # Running locally

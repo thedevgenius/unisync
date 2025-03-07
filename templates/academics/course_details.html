@@ -13,18 +13,101 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-    <div class="container-fixed">
-        
-        {% for key, value in fees.items %}
-            {{ key }}
-            
-            {% for key in value %}
-                <p>{{ key.particular }} - {{ key.amount }}</p>
+    <div class="container-fixed mt-5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+            <div class="flex flex-col justify-center gap-2">
+                <h1 class="text-xl font-semibold leading-none text-gray-900">{{ course.name }}</h1>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fixed mt-5">
+        <div class="flex grow gap-5 lg:gap-7.5">
+            <div class="hidden lg:block w-[230px] shrink-0">
+                <div class="w-[230px]">
+                    <div class="gtabs flex flex-col grow relative before:absolute before:left-[11px] before:top-0 before:bottom-0 before:border-l before:border-gray-200">
+                        <a href="#overview" class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 active border border-transparent text-2sm text-gray-800 hover:text-primary hover:font-medium scrollspy-active:bg-secondary-active scrollspy-active:text-primary scrollspy-active:font-medium dark:hover:bg-coal-300 dark:hover:border-gray-100 hover:rounded-lg dark:scrollspy-active:bg-coal-300 dark:scrollspy-active:border-gray-100" data-scrollspy-anchor="true">
+                            <span class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 scrollspy-active:before:bg-primary"></span>
+                            Overview
+                        </a>
+                        <a href="#fees" class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 border border-transparent text-2sm text-gray-800 hover:text-primary hover:font-medium scrollspy-active:bg-secondary-active scrollspy-active:text-primary scrollspy-active:font-medium dark:hover:bg-coal-300 dark:hover:border-gray-100 hover:rounded-lg dark:scrollspy-active:bg-coal-300 dark:scrollspy-active:border-gray-100" data-scrollspy-anchor="true">
+                            <span class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 scrollspy-active:before:bg-primary"></span>
+                            Fees
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-stretch grow gap-5 lg:gap-7.5">
+                <div class="card pb-2.5 gtab-content" id="overview" style="display: block;">
+                    <div class="card-header">
+                        <h3 class="card-title">Overview</h3>
+                    </div>
+                    <div class="card-body grid gap-5">
+                        <div class="w-full">
+                            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                <label class="form-label flex items-center gap-1 max-w-56">Department</label>
+                                <input class="input" type="text" value="{{ course.department }}">
+                            </div>
+                        </div>
+                        <div class="w-full">
+                            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                <label class="form-label flex items-center gap-1 max-w-56">Duration</label>
+                                <input class="input" type="text" value="{{ course.max_year }} Year">
+                            </div>
+                        </div>
+                        <div class="flex justify-end pt-2.5">
+                            <button class="btn btn-primary">
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-            {% endfor %}
-                
-        {% endfor %}
-                
+                <div class="card pb-2.5 gtab-content" id="fees">
+                    <div class="card-header">
+                        <h3 class="card-title">Fees</h3>
+                    </div>
+                    <div class="card-body grid gap-5">
+                        <div data-accordion="true" data-accordion-expand-all="true">
+                            <div class="accordion-item [&amp;:not(:last-child)]:border-b border-b-gray-200" data-accordion-item="true" aria-expanded="false">
+                                <button class="accordion-toggle py-4" data-accordion-toggle="#faq_1_content">
+                                    <span class="text-base text-gray-900">How is pricing determined for each plan ?</span>
+                                    <i class="ki-filled ki-plus text-gray-600 text-sm accordion-active:hidden block"></i>
+                                    <i class="ki-filled ki-minus text-gray-600 text-sm accordion-active:block hidden"></i>
+                                </button>
+                                <div class="accordion-content hidden" id="faq_1_content" style="height: 0px;">
+                                    <div class="text-gray-700 text-md pb-4">
+                                        Metronic embraces flexible licensing options that empower you to choose the perfect fit for your
+                                        project's needs and budget.
+                                        Understanding the factors influencing each plan's pricing helps you make an informed decision.
+                                        Metronic embraces flexible licensing options that empower you to choose the perfect fit for your
+                                        project's needs and budget.
+                                        Understanding the factors influencing each plan's pricing helps you make an informed decision.
+                                        Metronic embraces flexible licensing options that empower you to choose the perfect fit for your
+                                        project's needs and budget.
+                                        Understanding the factors influencing each plan's pricing helps you make an informed decision
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock content %}
     
+{% block extra_js %}
+    <script>
+        $(document).ready(function(){
+            $('.gtabs a').on('click', function(e){
+                e.preventDefault();
+                var target = $(this).attr('href');
+                $('.gtabs a').removeClass('active');
+                $(this).addClass('active');
+                $('.card').hide();
+                $(target).show();
+            });
+        });
+    </script>
+{% endblock extra_js %}

@@ -3,7 +3,7 @@ from .views import CourseListView, CourseDetailView
 
 urlpatterns = [
     path('course/list/', CourseListView.as_view(), name='course_list'),
-    path('course/<int:pk>/', CourseDetailView.as_view(), name='course_details'),
+    path('course/<str:hash_id>/', CourseDetailView.as_view(), name='course_details'),
 ]
 
 

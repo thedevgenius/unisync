@@ -1,32 +1,29 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from collections import defaultdict
+from hashids import Hashids
 
-from payment.models import Fees
 from .models import Course
+# Create your views here.
 
-# from .forms import CourseAddForm
+hashids = Hashids(salt='academics', min_length=10)
 
-# # Create your views here.
+
 class CourseListView(ListView):
     template_name = 'academics/course_list.html'
     model = Course
     context_object_name = 'courses'
 
-class CourseDetailView(DetailView):
+class CourseDetailView(TemplateView):
     template_name = 'academics/course_details.html'
-    model = Course
-    context_object_name = 'course'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        fees = Fees.objects.filter(course=self.object, year__status=True).values('due_date', 'particular__name', 'amount')
-        grouped_data = defaultdict(list)
-        for fee in fees:
-            grouped_data[fee['due_date']].append({'particular': fee['particular__name'], 'amount': fee['amount']})
-        context['fees'] = dict(grouped_data)
-
-        return context
+    
+    def get(self, request, *args, **kwargs):
+        hash_id = kwargs.get('hash_id')
+        course_id = hashids.decode(hash_id)[0]
+        course = Course.objects.get(pk=course_id)
+        return render(request, self.template_name, {'course': course})
+    
+    
 
 
 
