@@ -11,13 +11,12 @@ class Particular(models.Model):
 class Fees(models.Model):
     year = models.ForeignKey('academics.AcademicYear', on_delete=models.CASCADE, null=True)
     course = models.ForeignKey('academics.Course', on_delete=models.CASCADE)
-    particular = models.ForeignKey(Particular, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
     due_date = models.DateField()
+    data = models.JSONField(default=None)
     
     def __str__(self):
-        return f"{self.particular.name} - {self.due_date}"
+        return f"{self.year.title} - {self.due_date}"
     
     class Meta:
         ordering = ['due_date']
-        unique_together = ('due_date','particular', 'course', 'year')
+        unique_together = ('due_date', 'course', 'year')
